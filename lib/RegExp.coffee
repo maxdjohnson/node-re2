@@ -15,9 +15,13 @@ module.exports = class RegExp
 
     if typeof expression == 'object' and expression instanceof RegExpNative
       expression = expression.source
-    expression = String(expression)
+      this.global = expression.global
+      this.ignoreCase = expression.ignoreCase
+      this.multiline = expression.multiline
+    else
+      expression = String(expression)
+      parseFlags this, flags
 
-    parseFlags this, flags
     re2Flags = ''
     if this.ignoreCase
       re2Flags += 'i'
@@ -40,6 +44,7 @@ module.exports = class RegExp
     match.input = str
     if this.global
       this.lastIndex = match.index + 1
+    return match
 
   test: (str) ->
     return this.exec(str) != null
