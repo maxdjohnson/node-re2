@@ -13,10 +13,10 @@ module.exports = class RE2RegExp
   constructor: (expression, flags='') ->
 
     if typeof expression == 'object' and expression instanceof RegExp
-      expression = expression.source
       this.global = expression.global
       this.ignoreCase = expression.ignoreCase
       this.multiline = expression.multiline
+      expression = expression.source
     else
       expression = String(expression)
       parseFlags this, flags
