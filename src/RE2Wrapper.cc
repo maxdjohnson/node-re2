@@ -73,7 +73,8 @@ Handle<Value> RE2Wrapper::Match(const Arguments& args) {
 
   int n_matches = 1 + obj->_instance.NumberOfCapturingGroups();
   re2::StringPiece* matches = new re2::StringPiece[n_matches];
-  obj->_instance.Match(str, pos, str.size(), RE2::UNANCHORED, matches, n_matches);
+  bool matched = obj->_instance.Match(str, pos, str.size(), RE2::UNANCHORED, matches, n_matches);
+  if (!matched) n_matches = 0;
 
   Local<Array> resultsArray = Array::New(n_matches);
   for(unsigned int i = 0; i < n_matches; i++){
