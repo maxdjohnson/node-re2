@@ -1,5 +1,4 @@
 {RE2} = require('../build/Release/re2')
-RegExpNative = RegExp
 
 parseFlags = (obj, flags) ->
   obj.global = obj.ignoreCase = obj.multiline = false
@@ -8,12 +7,12 @@ parseFlags = (obj, flags) ->
       when 'g' then obj.global = true
       when 'i' then obj.ignoreCase = true
       when 'm' then obj.multiline = true
-      else throw new SyntaxError('Invalid flags supplied to RegExp constructor \'' + flag + '\'')
+      else throw new SyntaxError('Invalid flags supplied to RE2RegExp constructor \'' + flag + '\'')
 
-module.exports = class RegExp
+module.exports = class RE2RegExp
   constructor: (expression, flags='') ->
 
-    if typeof expression == 'object' and expression instanceof RegExpNative
+    if typeof expression == 'object' and expression instanceof RegExp
       expression = expression.source
       this.global = expression.global
       this.ignoreCase = expression.ignoreCase
